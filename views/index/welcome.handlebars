@@ -1,0 +1,12 @@
+<h1>Welcome</h1>
+<p>Welcome to storybooks</p>
+<p>Post stories from the best and worst of your life and choose for them to be read by the world or completley private
+    as your own personal diary
+</p>
+
+{{#if user}}
+{{else}}
+<a href="/auth/google" class="btn red darker-1">
+    <i class="fa fa-google left"> Login With Google</i>
+</a>
+{{/if}}
