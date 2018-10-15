@@ -15,15 +15,21 @@
                 {{/if}}
             </ul>
             <!-- SIDE MENU-->
-            <ul class="side-nave" id="main-menu">
+            <ul class="side-nav" id="main-menu">
+
+                {{#if user}}
+                {{else}}
                 <li>
-                    {{#if user}}
-                    {{else}}
-                    <a href="/auth/google" class="btn red darker-1">
-                        <i class="fa fa-google left"> Login With Google</i>
-                    </a>
-                    {{/if}}
+                    <a href="/auth/google" class="btn red darker-1"><i class="fa fa-google left"></i>Login With Google</a>
                 </li>
+                {{/if}}
+                <li><a href="/stories">Public Stories <i class="fa fa-book"></i></a></li>
+                {{#if user}}
+                <li class="divider"></li>
+                <li><a href="/dashbord"><i class="fa fa-cog"></i>Dashboard</a></li>
+                <li><a href="/stories/my"><i class="fa fa-user"></i>My stories</a></li>
+                <li><a href="/auth/logout"><i class="fa fa-out"></i>Logout</a></li>
+                {{/if}}
             </ul>
         </div>
     </div>
