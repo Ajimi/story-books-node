@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
+const methodOverride = require('method-override');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
@@ -22,6 +23,12 @@ const stories = require('./routes/stories');
 // Load keys
 const keys = require('./config/keys');
 
+const {
+    truncate,
+    stripTags,
+    formatDate,
+    select
+} = require('./helpers/hbs');
 // Connect to mongoose
 mongoose.connect(keys.mongoURI, {
         autoIndex: false,
@@ -36,12 +43,23 @@ mongoose.connect(keys.mongoURI, {
 const app = express();
 
 // Body Parser
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({
+    extended: false
+}))
 app.use(bodyParser.json())
 
-// Handlebars
+// Method Override Middleware
+// Method Override middleware
+app.use(methodOverride('_method'));
 
+// Handlebars
 app.engine('handlebars', exphbs({
+    helpers: {
+        truncate: truncate,
+        stripTags: stripTags,
+        formatDate: formatDate,
+        select: select
+    },
     defaultLayout: 'main'
 }));
 app.set('view engine', 'handlebars');
