@@ -15,6 +15,9 @@ router.get('/', (req, res) => {
             status: 'public'
         })
         .populate('user')
+        .sort({
+            date: 'desc'
+        })
         .then(stories => {
             res.render('stories/index', {
                 stories: stories
@@ -32,9 +35,13 @@ router.get('/edit/:id', ensureAuthenticated, (req, res) => {
             _id: req.params.id
         })
         .then(story => {
-            res.render('stories/edit', {
-                story: story
-            });
+            if (story.user != req.user.id) {
+                res.redirect('/stories');
+            } else {
+                res.render('stories/edit', {
+                    story: story
+                });
+            }
         });
 });
 
@@ -49,6 +56,32 @@ router.get('/show/:id', (req, res) => {
                 story: story
             });
         });
+});
+
+
+// List Stories from a user
+router.get('/user/:id', (req, res) => {
+    Story.find({
+            user: req.params.id,
+            status: 'public'
+        }).populate('user')
+        .then(stories => {
+            res.render('stories/index', {
+                stories: stories
+            });
+        })
+});
+
+// Logged in user story
+router.get('/my', ensureAuthenticated, (req, res) => {
+    Story.find({
+            user: req.user.id,
+        }).populate('user')
+        .then(stories => {
+            res.render('stories/index', {
+                stories: stories
+            });
+        })
 });
 
 
@@ -126,7 +159,11 @@ router.post('/comment/:id', (req, res) => {
             .then(story => {
                 res.redirect(`/stories/show/${story.id}`)
             });
-    })
+    });
 
-})
+});
+
+
+
+
 module.exports = router;

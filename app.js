@@ -27,7 +27,8 @@ const {
     truncate,
     stripTags,
     formatDate,
-    select
+    select,
+    editIcon
 } = require('./helpers/hbs');
 // Connect to mongoose
 mongoose.connect(keys.mongoURI, {
@@ -45,8 +46,8 @@ const app = express();
 // Body Parser
 app.use(bodyParser.urlencoded({
     extended: false
-}))
-app.use(bodyParser.json())
+}));
+app.use(bodyParser.json());
 
 // Method Override Middleware
 // Method Override middleware
@@ -58,7 +59,8 @@ app.engine('handlebars', exphbs({
         truncate: truncate,
         stripTags: stripTags,
         formatDate: formatDate,
-        select: select
+        select: select,
+        editIcon: editIcon
     },
     defaultLayout: 'main'
 }));
