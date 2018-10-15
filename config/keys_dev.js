@@ -3,3 +3,6 @@ module.exports = {
     googleClientID:'685529647047-jdppifkses1rt4arn5n9m8frpfnm1bh6.apps.googleusercontent.com',
     googleClientSecret:'6utnYNqzNdBkGmB1Bhfdm9ub'
 };
+
+// process.env.MONGO_URI ...
+// process.env.GOOGLE_CLIENT_ID ...
